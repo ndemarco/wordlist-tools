@@ -11,8 +11,11 @@ def is_valid_file(parser, arg):
 
 
 parser = ArgumentParser(description='FileCombiner description')
-parser.add_argument('-i', '--infile', dest='filename', required=True,
+parser.add_argument('-i', '--infile', dest='input_file', required=True,
                     help='input text file', metavar="FILE",
+                    type=lambda x: is_valid_file(parser, x))
+parser.add_argument('-o', '--outfile', dest='output_file', required = False,
+                    help='output text file', metavar="FILE",
                     type=lambda x: is_valid_file(parser, x))
 args = parser.parse_args()
 
@@ -40,8 +43,8 @@ def list_doubles_to_list(doubles_list):
     return combined_list
 
 
-def add_sequential_capitals(word, max_num_of_capitals):
-    words = list()
+def run_sequential_capitals(word, max_num_of_capitals):
+    words = [word]
     for x in range(max_num_of_capitals):
         for letter in range(len(word)):
             if len(word) - x - letter > 0:
@@ -53,13 +56,13 @@ def add_sequential_capitals(word, max_num_of_capitals):
 
 
 def process_words(word_list):
-    print("process_words\n", word_list)
+    print("process_words", word_list)
     words = list()
     for word in word_list:
-        print(word)
-        words.append(add_sequential_capitals(word, 12))
+        words.append(run_sequential_capitals(word, 12))
     return words
 
 
-processed_words_list = process_words(get_word_list(args.filename))
+processed_words_list = process_words(get_word_list(args.input_file))
 print(processed_words_list)
+print(args.output_file)
