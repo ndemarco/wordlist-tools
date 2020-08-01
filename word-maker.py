@@ -26,21 +26,30 @@ def read_word_list(file_object):
     return [line.rstrip('\n') for line in f]
 
 
-def combine_list(word_list):
-    # returns a list of words consisting of
-    #  the combination of all items in a list.
-    forward = list(combinations(word_list, 2))
-    reverse = list()
-    for element in forward:
-        reverse.append([element[1], element[0]])
-    return forward + reverse
+# def combine_list(word_list):
+#     # returns a list of words consisting of
+#     #  the combination of all items in a list.
+#     forward = list(combinations(word_list, 2))
+#     reverse = list()
+#     for element in forward:
+#         reverse.append([element[1], element[0]])
+#     return forward + reverse
 
 
-def permute_list(word_list):
+def permute_words(word_list):
     # returns a list of words consisting of
-    #  the combination of all items in a list.
+    #  the permutations of all items in a list.
+    print("word list")
+    print(word_list)
     return list(permutations(word_list, 2))
 
+
+def permute_word_lists(list_of_word_lists):
+    # returns a list of each two-word combination, including variants
+    # of each word.
+    # Each word's variants are not combined.
+    for word in list_of_word_lists:
+        print(word)
 
 
 # def list_doubles_to_list(doubles_list):
@@ -67,14 +76,17 @@ def run_sequential_uppercase(word, max_sequential_characters):
 
 
 def process_words(word_list):
-    print("process_words", word_list)
     words = list()
     for word in word_list:
         words.append(run_sequential_uppercase(word, 12))
     return words
 
 
-print(type(permute_list(read_word_list(args.input_file))[1]))
+# permute_word_lists([['hello'], ['Hello'], ['goodbye'], ['Goodbye']])
+# print(process_words(read_word_list(args.input_file)))
+print(args.input_file)
+# print(permute_words(read_word_list(args.input_file)))
+
 # processed_words_list = process_words(read_word_list(args.input_file))
 # print(processed_words_list)
 # print(args.output_file)

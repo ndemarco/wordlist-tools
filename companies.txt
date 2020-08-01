@@ -6,3 +6,7 @@ pavillion
 hannis
 brother
 epson
+lenovo
+thinkpad
+asus
+hannis
