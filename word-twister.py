@@ -53,19 +53,17 @@ For two digits: loop through 0-9, adding the range(10) to each digit looped.
 '''
 
 
-def make_number_list(digits, pad_with_zeros):
+def make_number_list(digits):
     number_list = []
     if digits > 0:
-        zero_to_nine = [str(i) for i in range(10)]
-        print(zero_to_nine)
+        zero_to_nine = [str(i) for i in range(3)]
         number_list += zero_to_nine
-        print(number_list)
         for z in range(1, digits):
             temp_numbers = []
             for y in number_list:
                 temp_numbers += [y + s for s in zero_to_nine]
             number_list += temp_numbers
-    return temp_numbers
+    return number_list
 
 
 def run_sequential_uppercase(word, max_sequential_characters):
@@ -89,15 +87,23 @@ def twist_word_list(word_list):
                        run_sequential_uppercase(word_pair[1], 2)])
     return result
 
+def write_file(output_file, final_list):
+    f = open(output_file, "w")
+    for word in final_list:
+        f.write("%s\n" % word)
 
-begin_time = datetime.now()
-print('\nFinal list', make_number_list(3, True))
-print(datetime.now() - begin_time)
+def combine_words_with_number(numberless_list, numbers):
+    final_list = list()
+    for word_pair in numberless_list:
+        for first_word in word_pair[0]:
+            for last_word in word_pair[1]:
+                for number in numbers:
+                    final_list.append(first_word+number+last_word)
+                    # print(first_word+number+last_word)
+    return final_list        
 
-# numbers = make_number_list(2)
-# numberless_list = (twist_word_list(permute_words(read_word_list(
-#                    command_args.input_file))))
-# for word_pair in numberless_list:
-#     print(word_pair)
-#     for each_word in word_pair[0]:
-#         print(each_word)
+numbers = make_number_list(1)
+numberless_list = (twist_word_list(permute_words(read_word_list(command_args.input_file))))
+
+combined_list = combine_words_with_number(numberless_list, numbers)
+write_file(command_args.output_file, combined_list)
